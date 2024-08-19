@@ -9,11 +9,13 @@
 <body>
     <div class="container">
         <h1>To-Do Item</h1>
-        <div id="currentItem"></div>
+        <div id="currentItem" class="current-item"></div>
         <div class="swipe-instructions">
-            <p>Swipe left if done, swipe right to view another item.</p>
+            <p>Swipe left to mark as done, swipe right to view next item.</p>
         </div>
+        <a href="index.html" class="back-link">Back to List</a>
     </div>
+    <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

@@ -9,10 +9,14 @@
 <body>
     <div class="container">
         <h1>To-Do List</h1>
-        <input type="text" id="newItem" placeholder="Add a new to-do item">
-        <button onclick="addItem()">Add</button>
+        <div class="input-container">
+            <input type="text" id="newItem" placeholder="Add a new to-do item">
+            <button onclick="addItem()">Add</button>
+        </div>
         <ul id="todoList"></ul>
+        <a href="view.html" class="view-link">View Items</a>
     </div>
+    <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
