@@ -3,17 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <title>View To-Do Item</title>
+    <title>View Tasks</title>
 </head>
 <body>
     <div class="container">
-        <h1>To-Do Item</h1>
-        <div id="currentItem" class="current-item"></div>
-        <div class="swipe-instructions">
-            <p>Swipe left to mark as done, swipe right to view next item.</p>
+        <h1>Task Viewer</h1>
+        <div class="task-container">
+            <div class="task-card" id="taskCard">
+                <div class="task-content" id="currentItem"></div>
+            </div>
+            <div class="action-overlay" id="doneOverlay">
+                <i class="fas fa-check"></i> Mark as Done
+            </div>
+            <div class="action-overlay" id="nextOverlay">
+                <i class="fas fa-arrow-right"></i> Next Task
+            </div>
         </div>
-        <a href="index.html" class="back-link">Back to List</a>
+        <div class="swipe-instructions">
+            <p><i class="fas fa-arrow-left"></i> Swipe left to mark as done</p>
+            <p><i class="fas fa-arrow-right"></i> Swipe right for next task</p>
+        </div>
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to List</a>
     </div>
     <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
     <script src="script.js"></script>

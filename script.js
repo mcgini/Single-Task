@@ -44,24 +44,57 @@ function showCurrentItem() {
     if (todoItems.length > 0) {
         itemDiv.textContent = todoItems[currentItemIndex];
     } else {
-        itemDiv.textContent = 'No items to display.';
+        itemDiv.textContent = 'No tasks to display.';
     }
 }
 
 function setupSwipe() {
-    const element = document.getElementById('currentItem');
-    if (!element) return;
+    const card = document.getElementById('taskCard');
+    const doneOverlay = document.getElementById('doneOverlay');
+    const nextOverlay = document.getElementById('nextOverlay');
+    if (!card) return;
 
-    const hammer = new Hammer(element);
-    hammer.on('swipeleft swiperight', function(ev) {
-        if (ev.type === 'swipeleft') {
-            // Mark as done (remove item)
+    let hammer = new Hammer(card);
+    let isDragging = false;
+    let startX = 0;
+
+    hammer.on('panstart', function(ev) {
+        isDragging = true;
+        startX = ev.center.x;
+        card.style.transition = 'none';
+    });
+
+    hammer.on('panmove', function(ev) {
+        if (!isDragging) return;
+        let deltaX = ev.center.x - startX;
+        card.style.transform = `translateX(${deltaX}px)`;
+
+        if (deltaX < 0) {
+            doneOverlay.style.opacity = Math.min(-deltaX / 100, 1);
+        } else {
+            nextOverlay.style.opacity = Math.min(deltaX / 100, 1);
+        }
+    });
+
+    hammer.on('panend', function(ev) {
+        isDragging = false;
+        card.style.transition = 'transform 0.3s ease-out';
+        
+        if (ev.deltaX < -100) {
+            // Swipe left - mark as done
             todoItems.splice(currentItemIndex, 1);
-        } else if (ev.type === 'swiperight') {
-            // View next item
+            localStorage.setItem('todoItems', JSON.stringify(todoItems));
+            if (currentItemIndex >= todoItems.length) {
+                currentItemIndex = 0;
+            }
+        } else if (ev.deltaX > 100) {
+            // Swipe right - next task
             currentItemIndex = (currentItemIndex + 1) % todoItems.length;
         }
-        localStorage.setItem('todoItems', JSON.stringify(todoItems));
+
+        card.style.transform = 'translateX(0)';
+        doneOverlay.style.opacity = 0;
+        nextOverlay.style.opacity = 0;
         showCurrentItem();
     });
 }
